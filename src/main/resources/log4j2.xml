@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="WARN">
+    <Properties>
+        <!--  -->
+        <Property name="dev_pattern">%d{HH:mm:ss} %highlight{%-5p} / %-45style{%c{2}}{Underline} - %cyan{%m%n}</Property>
+        <Property name="prod_pattern">%d{dd.MM.yyyy HH:mm:ss} %-5p / %c{2} - %m%n</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${dev_pattern}"/>
+        </Console>
+
+        <RollingFile name="RollingFile" fileName="ccc.log" filePattern="logs/ccc-%d{dd.MM.yyyy}.log" ignoreExceptions="false">
+            <PatternLayout pattern="${prod_pattern}">
+            </PatternLayout>
+            <TimeBasedTriggeringPolicy />
+        </RollingFile>
+    </Appenders>
+
+
+    <!-- DEV: -->
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+
+    <!-- PROD: -->
+    <!--<Loggers>-->
+    <!--<Root level="info">-->
+    <!--<AppenderRef ref="RollingFile"/>-->
+    <!--</Root>-->
+    <!--</Loggers>-->
+
+</Configuration>

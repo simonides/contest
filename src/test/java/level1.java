@@ -6,6 +6,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class level1 {
     private static final Logger logger = LogManager.getLogger(InputReader.class);
 
@@ -14,7 +18,7 @@ public class level1 {
 
     @Before
     public void setUp() throws Exception {
-        input = new InputReader("level/level1.txt");
+        input = new InputReader("level/level1_3.in");
         output = new OutputWriter("level/level1.out.txt");
     }
 
@@ -31,9 +35,21 @@ public class level1 {
     @Test
     public void execute() {
 
-        String line = input.readLine();
-        logger.info(line);
-        output.write(line);
+        City city = new City();
+        city.readFile(input);
+        List<Integer> buildingheights =   city.findBuildings();
+
+        logger.info(buildingheights);
+
+        for (Integer height : buildingheights) {
+
+            output.write(height.toString());
+            output.write(" ");
+
+        }
+        output.write("\n");
+
+//        output.write(line);
 
     }
 }

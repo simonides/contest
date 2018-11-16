@@ -17,7 +17,7 @@ public class OutputWriter implements AutoCloseable {
         writeSingleLine(StringUtils.join(parts, " "));
     }
 
-    public void writeLine(int... parts) {
+    public void writeLine(Integer... parts) {
         writeSingleLine(StringUtils.join(parts, " "));
     }
 

@@ -35,9 +35,9 @@
 //    @Test
 //    public void execute() {
 //
-//        City2 city2 = new City2();
+//        Routing city2 = new Routing();
 //        city2.readFile(input);
-//        for (City2.Way way : city2.citymap) {
+//        for (Routing.Way way : city2.citymap) {
 //            int dotx = way.getDotx();
 //            int doty = way.getDoty();
 //            output.write(Integer.toString(dotx) + " " + Integer.toString(doty)+ "\n");

@@ -7,10 +7,6 @@ import commons.InputReader;
         import org.junit.Before;
         import org.junit.Test;
 
-        import java.util.HashSet;
-        import java.util.List;
-        import java.util.Set;
-
 public class level3 {
     private static final Logger logger = LogManager.getLogger(InputReader.class);
 
@@ -36,11 +32,11 @@ public class level3 {
     @Test
     public void execute() {
 
-        City2 city2 = new City2();
+        Routing city2 = new Routing();
         city2.readFile(input);
 
 
-        for (City2.Way way : city2.citymap) {
+        for (Routing.Way way : city2.citymap) {
             int lastx = -1;
             int lasty = -1;
 

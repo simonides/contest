@@ -1,28 +1,29 @@
-package utils;
+package commons;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 
-public class FileOutput implements AutoCloseable {
+public class OutputWriter implements AutoCloseable {
     BufferedWriter bufferedWriter;
 
-    public FileOutput(String filepath) throws FileNotFoundException {
+    public OutputWriter(String filepath) throws FileNotFoundException {
         File file = new File(filepath);
         FileOutputStream fos = new FileOutputStream(file);
         this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(fos));
     }
 
-    public void writeLine(String line) {
-        try {
-            bufferedWriter.write(line);
-            bufferedWriter.newLine();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void writeLine(String... parts) {
+        writeSingleLine(StringUtils.join(parts, " "));
     }
 
-    public void writeLine(int var) {
+    public void writeLine(int... parts) {
+        writeSingleLine(StringUtils.join(parts, " "));
+    }
+
+    private void writeSingleLine(String line) {
         try {
-            bufferedWriter.write(var);
+            bufferedWriter.write(line);
             bufferedWriter.newLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -45,13 +46,13 @@ public class FileOutput implements AutoCloseable {
         }
     }
 
-    public void newLine() {
-        try {
-            bufferedWriter.newLine();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    public void newLine() {
+//        try {
+//            bufferedWriter.newLine();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public void close() {
         try {

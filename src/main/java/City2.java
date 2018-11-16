@@ -11,43 +11,26 @@ public class City2 {
 
     public class Way{
         float x0, y0, x1,y1;
-        float ratio;
 
-//        float getLenght(){
-//            float dx = x1 - x0;
-//            float dy = y1 - y0;
-//
-//            double length = Math.sqrt((dx *dx + dy *dy));
-//            return (float) length;
-//        }
-//
-//        int getDotx(){
-//
-//            float lenght = getLenght();
-//            double nx = (x1 -x0) / getLenght();
-//            return (int) (x0 + nx);
-//        }
-//        int getDoty(){
-//            float lenght = getLenght();
-//            double nx = (y1 -y0) / getLenght();
-//            return (int) (y0 + nx);
-//        }
-
-        int getDotx(){
+        int getDotx(float ratio){
             return (int) (x0 * (1-ratio) + x1 * ratio);
         }
-        int getDoty(){
+        int getDoty(float ratio){
             return (int) (y0 * (1-ratio) + y1 * ratio);
         }
     }
 
 //    1 int
-//    4 int 1 float
+//    4 int
     List<Way> citymap = new ArrayList<>();
     int count;
 
     private static final Logger logger = LogManager.getLogger(City.class);
 
+    public void getWays(){
+
+
+    }
 
     public void readFile(InputReader ir){
 
@@ -62,8 +45,6 @@ public class City2 {
             way.x1 = Integer.parseInt(row.get(2))+ .5f;
             way.y0 = Integer.parseInt(row.get(1))+ .5f;
             way.y1 = Integer.parseInt(row.get(3))+ .5f;
-            way.ratio = Float.parseFloat(row.get(4));
-
             citymap.add(way);
         }
     }

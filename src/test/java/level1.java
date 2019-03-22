@@ -30,8 +30,8 @@ public class level1 {
 
     @Before
     public void setUp() throws Exception {
-        input = new InputReader("level/level5/level5_5.in");
-        output = new OutputWriter("level/level5/level5_5.out");
+        input = new InputReader("level/level6/level6_1.in");
+        output = new OutputWriter("level/level6/level6_1.out");
     }
 
     @After
@@ -53,6 +53,7 @@ public class level1 {
         final List<String> healthSpeedStr = input.readStringParts();
         final double health = Double.parseDouble(healthSpeedStr.get(0));
         final double speed = Double.parseDouble(healthSpeedStr.get(1));
+        final int loot = Integer.parseInt(healthSpeedStr.get(2));
 
         final int alienCount = input.readLineInt();
 
@@ -61,7 +62,7 @@ public class level1 {
         for (int i = 0; i < alienCount; i++) {
             final int spawnTime = input.readLineInt();
             spawnTimes.add(spawnTime);
-            final Entity entity = new Entity(mapSize.get(0), mapSize.get(1), coords.get(0), coords.get(1), i, speed, spawnTime, path, health);
+            final Entity entity = new Entity(mapSize.get(0), mapSize.get(1), coords.get(0), coords.get(1), i, speed, spawnTime, path, health, loot);
             entities.add(entity);
         }
 
@@ -93,7 +94,7 @@ public class level1 {
             .map(pos -> new Tower(pos.x, pos.y, 0, damage, range))
             .collect(Collectors.toList());
 
-        final Simulation sim = new Simulation(entities, towers);
+        final Simulation sim = new Simulation(bestPositions, cost, damage, range, output, entities, towers, loot, gold - numTowersPossible * cost);
 
         try {
             sim.simulate();
@@ -116,7 +117,7 @@ public class level1 {
         System.out.println("Overkilled: " + overkilled);
 
         for (Tower tower : towers) {
-            output.write(String.format("%d %d\n", tower.x, tower.y));
+            //output.write(String.format("%d %d\n", tower.x, tower.y));
         }
 
         //        try {

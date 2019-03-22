@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Entity {
 
-    public Entity(int xSize, int ySize, int x, int y, int alienId, double speed, long spawnTime, List<Command> path, double health) {
+    public Entity(int xSize, int ySize, int x, int y, int alienId, double speed, long spawnTime, List<Command> path, double health, final int loot) {
         this.x = x;
         this.y = y;
         this.startX = x;

@@ -15,7 +15,7 @@ public class level1 {
 
     @Before
     public void setUp() throws Exception {
-        input = new InputReader("level/level1/level1.txt");
+        input = new InputReader("level/level1/lvl1-4.inp");
         output = new OutputWriter("level/level1/level1.out.txt");
     }
 
@@ -31,10 +31,6 @@ public class level1 {
 
     @Test
     public void execute() {
-
-        String line = input.readLine();
-        logger.info(line);
-        output.write(line);
-
+        
     }
 }

@@ -1,8 +1,14 @@
 package commons;
 
-import org.apache.commons.lang3.StringUtils;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.List;
 
-import java.io.*;
+import org.apache.commons.lang3.StringUtils;
 
 public class OutputWriter implements AutoCloseable {
     BufferedWriter bufferedWriter;
@@ -17,17 +23,21 @@ public class OutputWriter implements AutoCloseable {
         writeSingleLine(StringUtils.join(parts, " "));
     }
 
+    public void writeStringLine(List<String> parts) {
+        writeSingleLine(StringUtils.join(parts));
+    }
+
+    public void writeIntLine(List<Integer> parts) {
+        writeSingleLine(StringUtils.join(parts));
+    }
+
     public void writeLine(int... parts) {
         writeSingleLine(StringUtils.join(parts, " "));
     }
 
-    private void writeSingleLine(String line) {
-        try {
-            bufferedWriter.write(line);
-            bufferedWriter.newLine();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void printfLine(String format, Object... args) {
+        final String str = String.format(format, args);
+        writeSingleLine(str);
     }
 
     public void write(String var) {
@@ -46,13 +56,22 @@ public class OutputWriter implements AutoCloseable {
         }
     }
 
-//    public void newLine() {
-//        try {
-//            bufferedWriter.newLine();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    private void writeSingleLine(String line) {
+        try {
+            bufferedWriter.write(line);
+            bufferedWriter.newLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //    public void newLine() {
+    //        try {
+    //            bufferedWriter.newLine();
+    //        } catch (IOException e) {
+    //            throw new RuntimeException(e);
+    //        }
+    //    }
 
     public void close() {
         try {

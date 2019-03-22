@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Entity {
 
-    public Entity(int x, int y, int alienId, double speed, long spawnTime, List<Command> path) {
+    public Entity(int xSize, int ySize, int x, int y, int alienId, double speed, long spawnTime, List<Command> path, double health) {
         this.x = x;
         this.y = y;
         this.startX = x;
@@ -14,7 +14,13 @@ public class Entity {
         this.spawnTime = spawnTime;
         this.path = path;
         this.speed = speed;
+        this.health = health;
+        this.xSize = xSize;
+        this.ySize = ySize;
     }
+
+    public int xSize;
+    public int ySize;
 
     public int startX;
     public int startY;
@@ -23,6 +29,7 @@ public class Entity {
     public int y;
     public int direction;
     public int alienId;
+    public double health;
 
     public double speed;
     public long spawnTime; // in ticks
@@ -33,7 +40,18 @@ public class Entity {
     //
     //    }
 
-    public void evaluate(long tickTarget) {
+    public boolean isSpawned(int tick) {
+        return tick >= spawnTime;
+    }
+
+    public void shoot(long tick, double damage) {
+        if (tick < spawnTime) {
+            throw new IllegalStateException("this shit shouldnt happen");
+        }
+        health -= damage;
+    }
+
+    public void evaluate(long tickTarget) throws LostException {
         x = startX;
         y = startY;
         direction = 90;
@@ -59,6 +77,20 @@ public class Entity {
                 walkedDistance++;
             }
         }
+
+        if (x < 0 || x > xSize || y < 0 || y > ySize) {
+            throw new IllegalAccessError("Map size exceeded");
+        }
+
+        if (isAlive(tickTarget)) {
+            System.out.println("Lost to entity " + alienId);
+            throw new LostException();
+        }
+    }
+
+    public boolean isAlive(long tick) {
+        if (tick < spawnTime) return true;
+        return health > 0;
     }
 
     //    public void evaluatePositionAtTick(int tickTarget) {

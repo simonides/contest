@@ -1,5 +1,6 @@
 package commons;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Entity {
@@ -154,4 +155,31 @@ public class Entity {
     //
     //        return positions;
     //    }
+
+    public List<Position> executeCommands(List<Command> commands) {
+
+        final List<Position> positions = new ArrayList<>();
+        positions.add(new Position(x, y));
+
+        for (Command command : commands) {
+
+            direction = (direction + command.rotate * 90) % 360;
+
+            for (int i = 0; i < command.forward; i++) {
+                if (direction == 0) {
+                    y--;
+                } else if (direction == 90) {
+                    x++;
+                } else if (direction == 180) {
+                    y++;
+                } else if (direction == 270) {
+                    x--;
+                }
+
+                positions.add(new Position(x, y));
+            }
+        }
+
+        return positions;
+    }
 }

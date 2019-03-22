@@ -13,6 +13,8 @@ public class Simulation {
         this.entities = entities;
         this.towers = towers;
         this.tick = 0;
+
+        towers.stream().forEach(t -> System.out.printf("Placing tower at [%d/%d]\n", t.x, t.y));
     }
 
     public int simulate() throws LostException {
@@ -31,9 +33,9 @@ public class Simulation {
                 tower.fire(tick);
             }
 
-//            entities.stream()
-//                .filter(ent -> ent.isSpawned(tick))
-//                .forEach(ent -> System.out.printf("Entity %d [%d/%d] health: %f\n", ent.alienId, ent.x, ent.y, ent.health));
+            //            entities.stream()
+            //                .filter(ent -> ent.isSpawned(tick))
+            //                .forEach(ent -> System.out.printf("Entity %d [%d/%d] health: %f\n", ent.alienId, ent.x, ent.y, ent.health));
 
             final int tickFu = tick;
             final boolean stillAlive = entities.stream().anyMatch(ent -> ent.isAlive(tickFu));

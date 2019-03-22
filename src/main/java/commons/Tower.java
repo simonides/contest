@@ -13,9 +13,9 @@ public class Tower {
 
     private Entity targetAlien;
 
-    private int x;
-    private int y;
-    private int spawnTick;
+    public int x;
+    public int y;
+    public int spawnTick;
     private double damage;
 
     private int range;
@@ -42,7 +42,7 @@ public class Tower {
 
     public void fire(int tick) {
         if (targetAlien != null) {
-//            System.out.printf("Tower [%d/%d] shooting at %d\n", x, y, targetAlien.alienId);
+            //            System.out.printf("Tower [%d/%d] shooting at %d\n", x, y, targetAlien.alienId);
             targetAlien.shoot(tick, damage);
         }
     }
@@ -73,7 +73,14 @@ public class Tower {
 
     }
 
-    private double dist(Entity entity) {
+    public static double dist(Position a, Position b) {
+        double xDist = Math.abs(a.x - b.x);
+        double yDist = Math.abs(a.y - b.y);
+
+        return Math.sqrt(xDist * xDist + yDist * yDist);
+    }
+
+    public double dist(Entity entity) {
 
         double xDist = Math.abs(entity.x - x);
         double yDist = Math.abs(entity.y - y);

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -10,6 +11,7 @@ import commons.Command;
 import commons.Entity;
 import commons.InputReader;
 import commons.OutputWriter;
+import commons.Query;
 
 public class level1 {
     private static final Logger logger = LogManager.getLogger(InputReader.class);
@@ -19,8 +21,8 @@ public class level1 {
 
     @Before
     public void setUp() throws Exception {
-        input = new InputReader("level/level1/level1_5.in");
-        output = new OutputWriter("level/level1/level1_5.out");
+        input = new InputReader("level/level3/level3_3.in");
+        output = new OutputWriter("level/level3/level3_3_x.out");
     }
 
     @After
@@ -36,16 +38,39 @@ public class level1 {
     @Test
     public void execute() {
 
-        final List<Integer> integers = input.readIntParts();
+        final List<Integer> mapSize = input.readIntParts();
+        final List<Integer> coords = input.readIntParts();
+        final List<Command> path = input.readCommandsLine();
+        final double speed = Double.parseDouble(input.readStringParts().get(0));
+        final int alienCount = input.readLineInt();
 
-        final Entity entity = new Entity(integers.get(0), integers.get(1));
+        List<Entity> entities = new ArrayList<>();
+        List<Integer> spawnTimes = new ArrayList<>();
+        for (int i = 0; i < alienCount; i++) {
+            final int spawnTime = input.readLineInt();
+            spawnTimes.add(spawnTime);
+            final Entity entity = new Entity(coords.get(0), coords.get(1), i, speed, spawnTime, path);
+            entities.add(entity);
+        }
 
-        final List<Command> commands = input.readCommandsLine();
+        List<Query> queries = new ArrayList<>();
+        final int numberOfQueries = input.readLineInt();
+        for (int i = 0; i < numberOfQueries; i++) {
+            final List<Integer> ints = input.readIntParts();
 
-        entity.executeCommands(commands);
+            final Query query = new Query(ints.get(0), ints.get(1));
+            queries.add(query);
+        }
 
-        System.out.println(entity.x + " " + entity.y);
+        // execute stuff
 
-        output.printfLine(entity.x + " " + entity.y);
+        for (Query query : queries) {
+            final Entity entity = entities.get(query.alienId);
+            entity.evaluatePositionAtTick(query.tick);
+
+            final String str = String.format("%d %d %d %d\n", query.tick, query.alienId, entity.x, entity.y);
+            System.out.printf(str);
+            output.write(str);
+        }
     }
 }

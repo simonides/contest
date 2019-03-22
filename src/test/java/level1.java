@@ -21,8 +21,8 @@ public class level1 {
 
     @Before
     public void setUp() throws Exception {
-        input = new InputReader("level/level3/level3_3.in");
-        output = new OutputWriter("level/level3/level3_3_x.out");
+        input = new InputReader("level/level3/test");
+        output = new OutputWriter("level/level3/test.out");
     }
 
     @After

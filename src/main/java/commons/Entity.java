@@ -29,6 +29,12 @@ public class Entity {
 
     public List<Command> path;
 
+    public void evaluate(long tickTarget) {
+        for (long i = spawnTime; i <= tickTarget; i++) {
+
+        }
+    }
+
     public void evaluatePositionAtTick(int tickTarget) {
 
         x = startX;
@@ -41,7 +47,9 @@ public class Entity {
             direction = (direction + command.rotate * 90) % 360;
 
             for (int i = 0; i < command.forward; i++) {
-                if (currentTick >= tickTarget) return;
+
+                if (currentTick + 1f / speed > tickTarget) return;
+                //                if (currentTick >= tickTarget) return;
 
                 if (direction == 0) {
                     y--;

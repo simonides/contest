@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -79,6 +80,26 @@ public class InputReader implements AutoCloseable {
         }
 
         return table;
+    }
+
+    public List<Command> readCommandsLine() {
+
+        final List<String> parts = readStringParts();
+
+        final List<Command> commands = new ArrayList<>();
+        for (int i = 0; i < parts.size(); i += 2) {
+            final Command cmd = new Command();
+            if (parts.get(i).equals("F")) {
+                cmd.forward = Integer.parseInt(parts.get(i + 1));
+            } else if (parts.get(i).equals("T")) {
+                cmd.rotate = Integer.parseInt(parts.get(i + 1));
+            }
+
+            commands.add(cmd);
+
+        }
+
+        return commands;
     }
 
     public void close() {

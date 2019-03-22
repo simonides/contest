@@ -21,8 +21,8 @@ public class level1 {
 
     @Before
     public void setUp() throws Exception {
-        input = new InputReader("level/level3/test");
-        output = new OutputWriter("level/level3/test.out");
+        input = new InputReader("level/level3/level3_5.in");
+        output = new OutputWriter("level/level3/level3_5_x.out");
     }
 
     @After
@@ -66,7 +66,7 @@ public class level1 {
 
         for (Query query : queries) {
             final Entity entity = entities.get(query.alienId);
-            entity.evaluatePositionAtTick(query.tick);
+            entity.evaluate(query.tick);
 
             final String str = String.format("%d %d %d %d\n", query.tick, query.alienId, entity.x, entity.y);
             System.out.printf(str);

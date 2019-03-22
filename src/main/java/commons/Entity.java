@@ -29,28 +29,24 @@ public class Entity {
 
     public List<Command> path;
 
+    //    public double applyCommand(Command command, double speed, double ticks) {
+    //
+    //    }
+
     public void evaluate(long tickTarget) {
-        for (long i = spawnTime; i <= tickTarget; i++) {
-
-        }
-    }
-
-    public void evaluatePositionAtTick(int tickTarget) {
-
         x = startX;
         y = startY;
         direction = 90;
 
-        double currentTick = spawnTime;
+        double totalDistance = speed * (tickTarget - spawnTime);
+        double walkedDistance = 0;
 
         for (Command command : path) {
-            direction = (direction + command.rotate * 90) % 360;
-
-            for (int i = 0; i < command.forward; i++) {
-
-                if (currentTick + 1f / speed > tickTarget) return;
-                //                if (currentTick >= tickTarget) return;
-
+            if (walkedDistance + 1 > totalDistance) return;
+            if (command.forward == 0) {
+                direction = (direction + command.rotate * 90) % 360;
+                continue;
+            } else {
                 if (direction == 0) {
                     y--;
                 } else if (direction == 90) {
@@ -60,10 +56,40 @@ public class Entity {
                 } else if (direction == 270) {
                     x--;
                 }
-                currentTick += 1f / speed;
+                walkedDistance++;
             }
         }
     }
+
+    //    public void evaluatePositionAtTick(int tickTarget) {
+    //
+    //        x = startX;
+    //        y = startY;
+    //        direction = 90;
+    //
+    //        int currentTick = spawnTime;
+    //
+    //        for (Command command : path) {
+    //            direction = (direction + command.rotate * 90) % 360;
+    //
+    //            for (int i = 0; i < command.forward; i++) {
+    //
+    //                if (currentTick + 1f / speed > tickTarget) return;
+    //                //                if (currentTick >= tickTarget) return;
+    //
+    //                if (direction == 0) {
+    //                    y--;
+    //                } else if (direction == 90) {
+    //                    x++;
+    //                } else if (direction == 180) {
+    //                    y++;
+    //                } else if (direction == 270) {
+    //                    x--;
+    //                }
+    //                currentTick += 1f / speed;
+    //            }
+    //        }
+    //    }
 
     //    public Position executeCommand(Command command) {
     //        direction = (direction + command.rotate * 90) % 360;

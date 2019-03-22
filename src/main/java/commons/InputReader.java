@@ -88,15 +88,19 @@ public class InputReader implements AutoCloseable {
 
         final List<Command> commands = new ArrayList<>();
         for (int i = 0; i < parts.size(); i += 2) {
-            final Command cmd = new Command();
+
             if (parts.get(i).equals("F")) {
-                cmd.forward = Integer.parseInt(parts.get(i + 1));
+                final int forw = Integer.parseInt(parts.get(i + 1));
+                for (int z = 0; z < forw; z++) {
+                    final Command cmd = new Command();
+                    cmd.forward = 1;
+                    commands.add(cmd);
+                }
             } else if (parts.get(i).equals("T")) {
+                final Command cmd = new Command();
                 cmd.rotate = Integer.parseInt(parts.get(i + 1));
+                commands.add(cmd);
             }
-
-            commands.add(cmd);
-
         }
 
         return commands;

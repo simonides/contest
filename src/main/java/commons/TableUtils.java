@@ -131,11 +131,11 @@ public class TableUtils {
         return out.toString();
     }
 
-    private static <T> int rowCount(final Table<Integer, Integer, T> table) {
+    public static <T> int rowCount(final Table<Integer, Integer, T> table) {
         return Collections.max(table.rowKeySet());
     }
 
-    private static <T> int colCount(final Table<Integer, Integer, T> table) {
+    public static <T> int colCount(final Table<Integer, Integer, T> table) {
         return Collections.max(table.columnKeySet());
     }
 }

@@ -4,14 +4,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
-
 import commons.InputReader;
 import commons.OutputWriter;
-import commons.TableUtils;
 
-public class level1 {
+public class level0 {
     private final Logger logger = LogManager.getLogger(this.getClass());
 
     InputReader input;
@@ -35,7 +31,5 @@ public class level1 {
 
     @Test
     public void execute() {
-        final Table<Integer, Integer, Integer> t = TableUtils.create(5, 4, 42);
-        System.out.println(TableUtils.formatTable(t));
     }
 }

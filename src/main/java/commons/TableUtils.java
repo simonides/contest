@@ -5,14 +5,31 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import javax.swing.*;
+
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
-public class Utils {
+public class TableUtils {
 
-    public static <T> Table<Integer, Integer, T> getSubtable(Table<Integer, Integer, T> table, int fromX, int toX, int fromY, int toY) {
+    public static <T> Table<Integer, Integer, T> create(int rowCount, int colCount, T value) {
+        final Table<Integer, Integer, T> table = HashBasedTable.create();
+
+        fill(table, 0, 0, rowCount - 1, colCount - 1, value);
+        return table;
+    }
+
+    public static <T> void fill(Table<Integer, Integer, T> table, int fromX, int fromY, int toX, int toY, T value) {
+        for (int x = fromX; x <= toX; x++) {
+            for (int y = fromY; y <= toY; y++) {
+                table.put(x, y, value);
+            }
+        }
+    }
+
+    public static <T> Table<Integer, Integer, T> getSubtable(Table<Integer, Integer, T> table, int fromX, int fromY, int toX, int toY) {
         final HashBasedTable<Integer, Integer, T> newTable = HashBasedTable.create();
 
         for (int x = fromX; x <= toX; x++) {

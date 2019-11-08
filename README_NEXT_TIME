@@ -1,0 +1,2 @@
+Maybe write a custom x/y table that uses int/long indices only and correct order of parameters (x, y) instead of (row, col / y, x)
+Provide some useful functions that mirror the guava Table.

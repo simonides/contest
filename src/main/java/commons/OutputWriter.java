@@ -50,7 +50,7 @@ public class OutputWriter implements AutoCloseable {
 
     public void write(int var) {
         try {
-            bufferedWriter.write(var);
+            bufferedWriter.write(String.valueOf(var));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -6,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +23,8 @@ public class level3 {
 
     @Before
     public void setUp() throws Exception { // optimize
-        input = new InputReader("level/level3/level3_5.in");
-        output = new OutputWriter("level/level3/level3_5.out");
+        input = new InputReader("level/level4/level4_5.in");
+        output = new OutputWriter("level/level4/level4_5.out.actual");
     }
 
     @After
@@ -36,25 +38,40 @@ public class level3 {
     }
 
     @Test
-    public void execute() {
+    public void execute() throws FileNotFoundException {
         final int inputs = input.readLineInt();
 
         for (int i = 0; i < inputs; i++) {
             final String line = input.readLine();
             final String[] parts = line.split(" ");
 
-            double lat = Double.parseDouble(parts[0]);
-            double lng = Double.parseDouble(parts[1]);
-            double alt = Double.parseDouble(parts[2]);
+            int flightId = Integer.parseInt(parts[0]);
+            int queryTimestamp = Integer.parseInt(parts[1]);
 
-            final LNA lna = new LNA();
-            lna.lat = lat;
-            lna.lng = lng;
-            lna.alt = alt;
+            final InputReader flightFile = new InputReader("level/level4/usedFlights/" + flightId + ".csv");
 
-            final ECEF ecef = lna.toECEF();
+            final Flight flight = new Flight();
+            flight.origin = flightFile.readLine();
+            flight.dest = flightFile.readLine();
+            flight.takeoff = flightFile.readLineInt();
+            int count = flightFile.readLineInt();
+            flight.coords = new ArrayList<>();
 
-            output.write(ecef.x + " " + ecef.y + " " + ecef.z + "\n");
+            for (int j = 0; j < count; j++) {
+                final String[] split = flightFile.readLine().split(",");
+
+                int offset = Integer.parseInt(split[0]);
+                double lat = Double.parseDouble(split[1]);
+                double lng = Double.parseDouble(split[2]);
+                double alt = Double.parseDouble(split[3]);
+
+                final Coord fp = new Coord(offset, lat, lng, alt);
+                flight.coords.add(fp);
+            }
+
+            final Coord position = flight.getPosition(queryTimestamp);
+
+            output.write(position.lat + " " + position.lng + " " + position.alt + "\n");
         }
     }
 }

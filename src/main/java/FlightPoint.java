@@ -16,4 +16,7 @@ public class FlightPoint implements Comparable<FlightPoint> {
         }
         return this.start.compareTo(o.start);
     }
+
+    public static class LNA {
+    }
 }

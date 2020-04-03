@@ -120,11 +120,10 @@ public class level0 {
             output.write(a + " " + fps.get(a).size() + "\n");
         });
 
-        //
-        //        output.writeLine(minTimestamp.toString(), maxTimestamp.toString());
-        //        output.writeLine(minLat.toString(), maxLat.toString());
-        //        output.writeLine(minLong.toString(), maxLong.toString());
-        //        output.writeLine(maxAlt.toString());
+        output.writeLine(minTimestamp.toString(), maxTimestamp.toString());
+        output.writeLine(minLat.toString(), maxLat.toString());
+        output.writeLine(minLong.toString(), maxLong.toString());
+        output.writeLine(maxAlt.toString());
 
     }
 
